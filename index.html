@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Que veux-tu faire ce week-end ?</title>
+    <!-- Import de la police mignonne Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            /* Fond rose avec une grille de mèmes de chats répétés */
+            background-color: #ffb6c1;
+            background-image: 
+                linear-gradient(rgba(255, 182, 193, 0.88), rgba(255, 105, 180, 0.88)),
+                url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80'),
+                url('https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=300&q=80'),
+                url('https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=300&q=80'),
+                url('https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?auto=format&fit=crop&w=300&q=80');
+            background-size: auto, 200px, 250px, 220px, 180px;
+            background-repeat: repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a2e35;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            backdrop-filter: blur(5px);
+            border: 3px solid #ff69b4;
+            animation: fadeIn 0.8s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Le cœur mignon animé */
+        .heart-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            animation: heartbeat 1.2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.25); }
+            60% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #d63384;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: #fff0f5;
+            border: 2px solid #ff69b4;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #b03060;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #ff69b4;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Zone de résultat */
+        #result {
+            display: none;
+            margin-top: 15px;
+            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popUp {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #result-message {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ff1493;
+            margin-bottom: 8px;
+        }
+
+        .sub-message {
+            font-size: 16px;
+            color: #b03060;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .photo-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 3px solid #ff69b4;
+            background: #fff;
+            max-height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .reset-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .reset-btn:hover {
+            color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-card">
+        <!-- Cœur mignon -->
+        <div class="heart-icon">💖</div>
+        
+        <h1>Que veux tu faire ce week end ?</h1>
+
+        <div class="choices" id="choices-box">
+            <button class="btn" onclick="selectChoice()">🫕 raclette chic et élégant</button>
+            <button class="btn" onclick="selectChoice()">🛋️ au chaud sous un plaid</button>
+            <button class="btn" onclick="selectChoice()">🍺 boire une ou deux mousses au redo</button>
+        </div>
+
+        <div id="result">
+            <div id="result-message">Tres bon choix :)</div>
+            <div class="sub-message">j'ai hâte de te revoir, tu me manques &lt;3</div>
+            <!-- Votre photo de couple à la place du chat -->
+            <div class="photo-container">
+                <img src="couple.jpg" alt="Notre photo">
+            </div>
+            <button class="reset-btn" onclick="resetChoice()">↩ Changer d'avis</button>
+        </div>
+    </div>
+
+    <script>
+        function selectChoice() {
+            document.getElementById('choices-box').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function resetChoice() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('choices-box').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
